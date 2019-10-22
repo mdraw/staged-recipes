@@ -1,0 +1,42 @@
+{% set name = "dnnl" %}
+{% set version = "1.1" %}
+{% set sha256 = "c5aac67e5ed4d95fe9943f835df49bbe6d608507780787c64aa620bdbd2171ba" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  fn: v{{ version }}.tar.gz
+  url: https://github.com/intel/mkl-dnn/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+  host:
+    - openmp
+
+test:
+  requires:
+    - gtest
+  source_files:
+    - tests
+  commands:
+    - ctest
+
+about:
+  home: http://intel.github.io/mkl-dnn/
+  license: Apache 2.0
+  license_file: LICENSE
+  summary: 'Intel Deep Neural Network Library (DNNL)'
+  doc_url: http://intel.github.io/mkl-dnn/
+  dev_url: https://github.com/intel/mkl-dnn
+
+extra:
+  recipe-maintainers:
+    - mdraw
